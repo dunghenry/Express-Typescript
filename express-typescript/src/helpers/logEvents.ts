@@ -7,7 +7,7 @@ const logEvents = async (msg) => {
     const dateTime = `${format(new Date(), 'dd-MM-yyyy\tss:mm:HH')}`;
     const contentLog = `${dateTime} - ${msg}\n`;
     try {
-       await fs.appendFile(fileName, contentLog);
+        await fs.appendFile(fileName, contentLog);
     } catch (error) {
         console.log(error.message);
     }

@@ -1,0 +1,30 @@
+18-04-2022	26:36:19 - Please add product title
+
+18-04-2022	26:36:19 - Please add product category
+
+18-04-2022	33:56:20 - features.sort is not a function
+18-04-2022	52:56:20 - features.sort is not a function
+18-04-2022	07:57:20 - features.sort is not a function
+18-04-2022	27:01:21 - Cannot read properties of undefined (reading 'query')
+18-04-2022	36:02:21 - Cannot read properties of undefined (reading 'query')
+18-04-2022	03:03:21 - Cannot read properties of undefined (reading 'query')
+18-04-2022	21:13:21 - text index required for $text query
+18-04-2022	25:35:21 - BSON field 'skip' value must be >= 0, actual value '-5'
+18-04-2022	40:05:22 - Can't use $regrex with String.
+18-04-2022	54:05:22 - Can't use $regrex with String.
+18-04-2022	38:07:22 - Unexpected token o in JSON at position 1
+18-04-2022	35:08:22 - Can't use $regrex with String.
+18-04-2022	15:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	43:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	44:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	45:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	45:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	45:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	45:14:22 - Query was already executed: Product.find({ title: { '$regex': 'Samsung' } })
+18-04-2022	35:20:22 - Invalid status code: 20
+18-04-2022	42:20:22 - Invalid status code: 20
+18-04-2022	43:20:22 - Invalid status code: 20
+18-04-2022	43:20:22 - Invalid status code: 20
+18-04-2022	43:20:22 - Invalid status code: 20
+18-04-2022	44:20:22 - Invalid status code: 20
+18-04-2022	44:20:22 - Invalid status code: 20
