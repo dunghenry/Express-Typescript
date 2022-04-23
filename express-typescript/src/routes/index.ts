@@ -1,8 +1,10 @@
 import user from './user';
 import product from './product';
+import post from './post';
 const routes = [
     user,
-    product
+    product,
+    post
 ];
 
 export default routes;

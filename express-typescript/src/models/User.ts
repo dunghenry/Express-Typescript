@@ -10,14 +10,10 @@ const userSchema = new Schema<IUser>({
         type: String,
         required: true,
         unique: true,
-        minLength: 5,
-        maxLength: 50
     },
     password: {
         type: String,
         required: true,
-        minLength: 5,
-        maxLength: 20
     },
     avatar: {
         type: String
