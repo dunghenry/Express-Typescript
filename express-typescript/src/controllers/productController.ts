@@ -26,7 +26,7 @@ const productController = {
             const page = length / limit
             return res.status(200).json({ products, count, page });
         } catch (error) {
-            logEvents(error.message);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error);
         }
     },
@@ -37,7 +37,7 @@ const productController = {
             if (!product) return res.status(404).json("This product does not exist");
             return res.status(200).json(product);
         } catch (error) {
-            logEvents(error.message);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error)
         }
     },
@@ -53,7 +53,7 @@ const productController = {
             await product.save();
             return res.status(200).json(product);
         } catch (error) {
-            logEvents(error.message);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error)
         }
     },
@@ -65,7 +65,7 @@ const productController = {
             if (!product) return res.status(404).json("This product does not exist");
             return res.status(200).json(product);
         } catch (error) {
-            logEvents(error.message);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error)
         }
     },
@@ -76,7 +76,7 @@ const productController = {
             if (!product) return res.status(404).json("This product does not exist");
             return res.status(200).json({message: "Deleted product successfully!!!"});
         } catch (error) {
-            logEvents(error.message);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error)
         }
     }

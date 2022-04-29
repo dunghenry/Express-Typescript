@@ -1,7 +1,10 @@
 import express from 'express';
 import userController from './../controllers/userController';
+import verifyToken from '../middleware/auth';
 const router = express.Router();
-router.get("/users", userController.getAllUsers);
+router.get("/users", verifyToken, userController.getAllUsers);
 router.post("/users/register", userController.createUser);
 router.post("/users/login", userController.login);
+router.delete("/users/:id", verifyToken, userController.deleteAccount);
+router.post("/users/logout", verifyToken, userController.logout);
 export default router;

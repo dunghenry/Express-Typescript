@@ -8,7 +8,7 @@ export const checkProductData = async (req, res, next) => {
         }
     }
     if (errors.length > 0) {
-        errors.forEach(async item => await logEvents(`${item}\n`))
+        errors.forEach(async item => await logEvents(`${item}\n`, module.filename))
         return res.status(401).json({message: errors})
     }
     next();

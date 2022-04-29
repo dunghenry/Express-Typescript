@@ -9,7 +9,7 @@ const connectDB = async () => {
         console.log("Connect DB successfully!!")
     } catch (error) {
         console.log("Connect DB failed");
-        await logEvents(error.message);
+        await logEvents(error.message, module.filename);
         process.exit(1);
     }
 }
@@ -19,7 +19,7 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", async (error) => {
     if (error) {
         console.log("Connect DB error");
-        await logEvents(error.message);
+        await logEvents(error.message, module.filename);
         process.exit(-1);
     }
 });

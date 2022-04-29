@@ -8,12 +8,15 @@ const userController = {
             const users = await User.find({});
             res.status(200).json(users);
         } catch (error) {
-            logEvents(`${req.url} - ${req.method} - ${error.message}`);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error);
         }
     },
-    generateAccessToken: (user) => {
-        return jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '20m'})
+    generateAccessToken: (userId) => {
+        return jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
+    },
+    generateRefreshToken: (userId) => {
+        return jwt.sign({ userId: userId }, process.env.REFESH_TOKEN_SECRET, { expiresIn: '365d' })
     },
     createUser: async (req, res) => {
         try {
@@ -23,11 +26,10 @@ const userController = {
                 username: req.body.username,
                 password: hashed
             });
-            const token = userController.generateAccessToken(user);
             await user.save();
             return res.status(200).json(user);
         } catch (error) {
-            logEvents(`${req.url} - ${req.method} - ${error.message}`);
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error);
         }
     },
@@ -38,11 +40,44 @@ const userController = {
             if (!user) return res.status(404).json('User is incorrect!');
             const passwordValid = await bcrypt.compare(req.body.password, user.password);
             if (!passwordValid) return res.status(400).json("Invalid password");
-            const { password, ...info } = user['_doc'];
-            const accessToken = userController.generateAccessToken(user._id)
-            return res.status(200).json({ ...info, accessToken})
+            if (user && passwordValid) {
+                const accessToken = userController.generateAccessToken(user._id);
+                const refreshToken = userController.generateRefreshToken(user._id);
+                const { password, ...info } = user['_doc'];
+
+                //save refreshToken to cookie
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,
+                    secure: false,
+                    path: "/",
+                    sameSite: "strict",
+                });
+                return res.status(200).json({ ...info, accessToken })
+            }
+            
         } catch (error) {
-            await logEvents(`${req.url} - ${req.method} - ${error.message}`);
+            await logEvents(error.message, module.filename);
+            return res.status(500).json(error.message);
+        }
+    },
+    logout: async (req, res) => {
+        try {
+            res.clearCookie("refreshToken");
+            return res.status(200).json("Logged out successfully");
+        } catch (error) {
+            await logEvents(error.message, module.filename);
+            return res.status(500).json(error.message);
+        }
+    },
+    deleteAccount: async (req, res) => {
+        try {
+            const validId = (req.params.id === req.userId);
+            console.log(validId);
+            const account = await User.findOneAndDelete({ _id: req.userId, validId});
+            if (!account) return res.status(401).json("User not found or user not authorised!!!");
+            return res.status(200).json("Deleted account successfully!!!");
+        } catch (error) {
+            await logEvents(error.message, module.filename);
             return res.status(500).json(error.message);
         }
     }

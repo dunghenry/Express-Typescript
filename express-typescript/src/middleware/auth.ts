@@ -7,14 +7,17 @@ const verifyToken = async (req, res, next) => {
         try {
             const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
             req.userId = decoded.userId;
+            // console.log(req)
             next();
         } catch (error) {
-            await logEvents(error.message);
+            if (error.name === "TokenExpiredError")
+                return res.status(401).json("Token expired");
+            await logEvents(error.message, module.filename);
             return res.status(403).json("Token invalid");
         }
     }
     else {
-        await logEvents("Token not found");
+        await logEvents("Token not found", module.filename);
         return res.status(401).json("Token not found")
     }
 }
